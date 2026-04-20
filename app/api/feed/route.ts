@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { homeFeed } from "@/lib/mock/feed";
+import { marketplaceProducts } from "@/lib/mock/products";
 
 export async function GET() {
-  return NextResponse.json(homeFeed);
+  return NextResponse.json(marketplaceProducts);
 }

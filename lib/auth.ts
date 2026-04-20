@@ -17,3 +17,7 @@ export function parseSession(value?: string) {
     return null;
   }
 }
+
+export function getSessionUserId(session: AuthSession | null) {
+  return session?.email?.toLowerCase() || "guest";
+}

@@ -6,3 +6,4 @@ export default async function Home() {
 
   return <HeroShell content={content} />;
 }
+    

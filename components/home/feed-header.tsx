@@ -1,16 +1,24 @@
 import { ChevronDown, Search } from "lucide-react";
 
 type FeedHeaderProps = {
+  activeTab: "for-you" | "following";
+  onTabChange: (tab: "for-you" | "following") => void;
   onNext: () => void;
   onDiscover: () => void;
 };
 
-export function FeedHeader({ onNext, onDiscover }: FeedHeaderProps) {
+export function FeedHeader(props: FeedHeaderProps) {
+  const { activeTab, onDiscover, onNext, onTabChange } = props;
+
   return (
     <div className="flex items-center justify-between text-white">
       <div className="flex gap-5 text-lg font-semibold">
-        <span>For You</span>
-        <span className="text-white/55">Following</span>
+        <button className={activeTab === "for-you" ? "" : "text-white/55"} onClick={() => onTabChange("for-you")} type="button">
+          For You
+        </button>
+        <button className={activeTab === "following" ? "" : "text-white/55"} onClick={() => onTabChange("following")} type="button">
+          Following
+        </button>
       </div>
       <div className="flex items-center gap-3">
         <button

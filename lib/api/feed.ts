@@ -1,5 +1,5 @@
-import { homeFeed } from "@/lib/mock/feed";
+import { marketplaceProducts } from "@/lib/mock/products";
 
 export async function getHomeFeed() {
-  return homeFeed;
+  return marketplaceProducts;
 }

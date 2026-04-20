@@ -4,6 +4,7 @@ import {
   House,
   MessageSquare,
   PlusSquare,
+  UserRound,
   type LucideIcon,
 } from "lucide-react";
 
@@ -17,7 +18,8 @@ export type AppNavItem = {
 export const appNavItems: AppNavItem[] = [
   { label: "Home", href: "/home", icon: House },
   { label: "Discover", href: "/discover", icon: Compass },
-  { label: "Create", icon: PlusSquare, note: "Create post tools are next." },
-  { label: "Inbox", icon: MessageSquare, note: "Inbox is coming next." },
-  { label: "Alerts", icon: Bell, note: "Activity alerts are coming next." },
+  { label: "Create", href: "/create", icon: PlusSquare },
+  { label: "Inbox", href: "/inbox", icon: MessageSquare },
+  { label: "Profile", href: "/profile", icon: UserRound },
+  { label: "Alerts", href: "/alerts", icon: Bell },
 ];

@@ -1,14 +1,16 @@
-import type { DiscoverCategory } from "@/lib/mock/discover";
+import type { DiscoverCategory } from "@/lib/mock/categories";
 import { DiscoverCard } from "@/components/discover/discover-card";
 
 type DiscoverGridProps = {
   categories: DiscoverCategory[];
+  getCount: (categoryId: string) => number;
   selectedId: string;
   onSelect: (id: string) => void;
 };
 
 export function DiscoverGrid({
   categories,
+  getCount,
   selectedId,
   onSelect,
 }: DiscoverGridProps) {
@@ -19,6 +21,7 @@ export function DiscoverGrid({
           key={category.id}
           active={category.id === selectedId}
           category={category}
+          productCount={getCount(category.id)}
           onSelect={onSelect}
         />
       ))}

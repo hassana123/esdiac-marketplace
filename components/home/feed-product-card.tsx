@@ -3,18 +3,21 @@ import { formatPrice } from "@/components/home/feed-utils";
 type FeedProductCardProps = {
   productName: string;
   price: number;
+  categoryLabel: string;
   onBuy: () => void;
 };
 
 export function FeedProductCard({
   productName,
   price,
+  categoryLabel,
   onBuy,
 }: FeedProductCardProps) {
   return (
     <div className="flex max-w-sm items-center justify-between rounded-[1.6rem] bg-[#2f3340]/92 p-3 backdrop-blur">
       <div>
         <p className="font-semibold text-white">{productName}</p>
+        <p className="text-xs uppercase tracking-[0.25em] text-white/40">{categoryLabel}</p>
         <p className="text-brand-accent">{formatPrice(price)}</p>
       </div>
       <button

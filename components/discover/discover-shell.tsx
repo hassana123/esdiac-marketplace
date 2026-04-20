@@ -1,25 +1,29 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { startTransition, useDeferredValue, useState } from "react";
 import type { AuthSession } from "@/lib/auth";
-import type { DiscoverCategory } from "@/lib/mock/discover";
 import { AppSidebar } from "@/components/app/app-sidebar";
 import { DiscoverGrid } from "@/components/discover/discover-grid";
 import { DiscoverHeader } from "@/components/discover/discover-header";
 import { DiscoverPanel } from "@/components/discover/discover-panel";
+import { useMarketplace } from "@/components/marketplace/marketplace-context";
 
 type DiscoverShellProps = {
-  categories: DiscoverCategory[];
   session: AuthSession;
 };
 
-export function DiscoverShell({ categories, session }: DiscoverShellProps) {
+export function DiscoverShell({ session }: DiscoverShellProps) {
+  const router = useRouter();
+  const { categories, products } = useMarketplace();
   const [search, setSearch] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [message, setMessage] = useState("Choose a category to explore curated drops.");
   const deferredSearch = useDeferredValue(search);
   const filtered = categories.filter((category) =>
-    category.title.toLowerCase().includes(deferredSearch.toLowerCase()),
+    `${category.title} ${products.filter((product) => product.categoryIds.includes(category.id)).map((product) => product.productName).join(" ")}`
+      .toLowerCase()
+      .includes(deferredSearch.toLowerCase()),
   );
   const visible = showAll ? filtered : filtered.slice(0, 6);
   const [selectedId, setSelectedId] = useState(categories[0]?.id ?? "");
@@ -31,7 +35,7 @@ export function DiscoverShell({ categories, session }: DiscoverShellProps) {
 
   return (
     <section className="min-h-screen bg-background px-4 py-4 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-7xl gap-4 xl:grid-cols-[220px_minmax(0,1fr)_320px]">
+      <div className="mx-auto grid max-w-[96rem] gap-4 xl:grid-cols-[260px_minmax(0,1fr)] 2xl:grid-cols-[280px_minmax(0,1fr)_340px]">
         <div className="xl:sticky xl:top-4 xl:h-[calc(100vh-2rem)]">
           <AppSidebar session={session} />
         </div>
@@ -52,6 +56,7 @@ export function DiscoverShell({ categories, session }: DiscoverShellProps) {
           {visible.length ? (
             <DiscoverGrid
               categories={visible}
+              getCount={(categoryId) => products.filter((item) => item.categoryIds.includes(categoryId)).length}
               onSelect={(id) => {
                 setSelectedId(id);
                 const picked = categories.find((item) => item.id === id);
@@ -68,9 +73,8 @@ export function DiscoverShell({ categories, session }: DiscoverShellProps) {
         {selected ? (
           <DiscoverPanel
             category={selected}
-            onExplore={() =>
-              setMessage(`Exploring ${selected.title.toLowerCase()} collections.`)
-            }
+            onExplore={() => router.push(`/home?category=${selected.id}`)}
+            products={products.filter((item) => item.categoryIds.includes(selected.id))}
           />
         ) : null}
       </div>

@@ -1,12 +1,15 @@
+import { DiscoverResults } from "@/components/discover/discover-results";
 import { ArrowRight } from "lucide-react";
-import type { DiscoverCategory } from "@/lib/mock/discover";
+import type { DiscoverCategory } from "@/lib/mock/categories";
+import type { MarketplaceProduct } from "@/lib/mock/products";
 
 type DiscoverPanelProps = {
   category: DiscoverCategory;
   onExplore: () => void;
+  products: MarketplaceProduct[];
 };
 
-export function DiscoverPanel({ category, onExplore }: DiscoverPanelProps) {
+export function DiscoverPanel({ category, onExplore, products }: DiscoverPanelProps) {
   return (
     <aside className="rounded-[2rem] border border-white/10 bg-[#0c1430]/92 p-6">
       <p className="text-xs tracking-[0.35em] text-white/45">CURATED PICK</p>
@@ -27,6 +30,9 @@ export function DiscoverPanel({ category, onExplore }: DiscoverPanelProps) {
         Explore Collection
         <ArrowRight className="size-4" />
       </button>
+      <div className="mt-6">
+        <DiscoverResults categoryId={category.id} products={products} />
+      </div>
     </aside>
   );
 }

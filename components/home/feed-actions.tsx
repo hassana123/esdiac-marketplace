@@ -1,18 +1,20 @@
-import { Heart, MessageCircle, Share2 } from "lucide-react";
+import { Bookmark, Heart, MessageCircle, Share2 } from "lucide-react";
 import { formatCompactNumber } from "@/components/home/feed-utils";
 
 type FeedActionsProps = {
+  bookmarked: boolean;
   liked: boolean;
   likes: number;
   comments: number;
   shares: number;
+  onBookmark: () => void;
   onLike: () => void;
   onComment: () => void;
   onShare: () => void;
 };
 
 export function FeedActions(props: FeedActionsProps) {
-  const { liked, likes, comments, shares, onLike, onComment, onShare } = props;
+  const { bookmarked, liked, likes, comments, shares, onBookmark, onLike, onComment, onShare } = props;
 
   return (
     <div className="flex gap-3 self-end lg:flex-col">
@@ -31,6 +33,12 @@ export function FeedActions(props: FeedActionsProps) {
         icon={<Share2 className="size-5" />}
         label={formatCompactNumber(shares)}
         onClick={onShare}
+      />
+      <Action
+        active={bookmarked}
+        icon={<Bookmark className={`size-5 ${bookmarked ? "fill-current" : ""}`} />}
+        label="Save"
+        onClick={onBookmark}
       />
     </div>
   );
