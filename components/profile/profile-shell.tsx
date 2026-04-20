@@ -104,7 +104,7 @@ function ProfileShellInner({
         placedAt: `Apr ${10 + index}, 2026`,
         productId: product.id,
         quantity: (index % 2) + 1,
-        status: (index % 3 === 0 ? "Paid" : index % 3 === 1 ? "Shipped" : "Delivered") as const,
+        status: index % 3 === 0 ? ("Paid" as const) : index % 3 === 1 ? ("Shipped" as const) : ("Delivered" as const),
         total: product.price * ((index % 2) + 1),
       }));
     return attachProductsToOrders([...seeded, ...generated], products);
